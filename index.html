@@ -1,1095 +1,368 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8" />
-  <title>Instytut Technologii Kwantowych</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <style>
-    :root {
-      --bg: #050814;
-      --bg-alt: #0b1022;
-      --accent: #4fd1c5;
-      --accent-soft: rgba(79, 209, 197, 0.15);
-      --text: #f7fafc;
-      --muted: #a0aec0;
-      --border: #2d3748;
-      --danger: #f56565;
-      --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.55);
-      --radius-lg: 18px;
-      --radius-md: 12px;
-      --radius-pill: 999px;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top, #111827 0, #050814 55%, #000 100%);
-      color: var(--text);
-      line-height: 1.6;
-      min-height: 100vh;
-    }
-
-    a {
-      color: var(--accent);
-      text-decoration: none;
-    }
-
-    a:hover {
-      text-decoration: underline;
-    }
-
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 20;
-      backdrop-filter: blur(16px);
-      background: linear-gradient(to bottom, rgba(5, 8, 20, 0.95), rgba(5, 8, 20, 0.7));
-      border-bottom: 1px solid rgba(45, 55, 72, 0.7);
-    }
-
-    .nav {
-      max-width: 1120px;
-      margin: 0 auto;
-      padding: 1rem 1.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1.5rem;
-    }
-
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-
-    .logo-icon {
-      width: 40px;
-      height: 40px;
-      border-radius: 14px;
-      background: radial-gradient(circle at 30% 20%, #4fd1c5, #3182ce 45%, #1a202c 100%);
-      box-shadow: 0 0 25px rgba(79, 209, 197, 0.7);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .logo-icon::before,
-    .logo-icon::after {
-      content: "";
-      position: absolute;
-      border-radius: 50%;
-      border: 1px solid rgba(226, 232, 240, 0.4);
-    }
-
-    .logo-icon::before {
-      width: 26px;
-      height: 26px;
-      top: 7px;
-      left: 7px;
-      border-style: dashed;
-    }
-
-    .logo-icon::after {
-      width: 14px;
-      height: 14px;
-      top: 13px;
-      left: 13px;
-      background: radial-gradient(circle, #e6fffa, #4fd1c5);
-      box-shadow: 0 0 18px rgba(237, 242, 247, 0.9);
-    }
-
-    .logo-text-main {
-      font-weight: 600;
-      letter-spacing: 0.04em;
-      font-size: 0.95rem;
-      text-transform: uppercase;
-    }
-
-    .logo-text-sub {
-      font-size: 0.75rem;
-      color: var(--muted);
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 1.25rem;
-      font-size: 0.9rem;
-    }
-
-    .nav-links a {
-      padding: 0.35rem 0.75rem;
-      border-radius: 999px;
-      color: var(--muted);
-      border: 1px solid transparent;
-      transition: all 0.18s ease-out;
-    }
-
-    .nav-links a:hover {
-      color: var(--text);
-      border-color: rgba(79, 209, 197, 0.5);
-      background: rgba(15, 23, 42, 0.9);
-    }
-
-    .nav-cta {
-      display: flex;
-      gap: 0.75rem;
-      align-items: center;
-    }
-
-    .btn {
-      border-radius: var(--radius-pill);
-      padding: 0.45rem 1.1rem;
-      font-size: 0.85rem;
-      border: 1px solid var(--border);
-      background: rgba(15, 23, 42, 0.9);
-      color: var(--text);
-      cursor: pointer;
-      transition: all 0.18s ease-out;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, #4fd1c5, #4299e1);
-      border-color: transparent;
-      color: #0b1120;
-      font-weight: 600;
-      box-shadow: 0 12px 30px rgba(66, 153, 225, 0.45);
-    }
-
-    .btn-primary:hover {
-      filter: brightness(1.05);
-      transform: translateY(-1px);
-      box-shadow: 0 16px 40px rgba(66, 153, 225, 0.6);
-    }
-
-    .btn-outline {
-      border-color: rgba(79, 209, 197, 0.6);
-      color: var(--accent);
-      background: rgba(15, 23, 42, 0.7);
-    }
-
-    .btn-outline:hover {
-      background: rgba(15, 23, 42, 0.95);
-      border-color: rgba(79, 209, 197, 0.9);
-    }
-
-    main {
-      max-width: 1120px;
-      margin: 0 auto;
-      padding: 2.5rem 1.5rem 3.5rem;
-    }
-
-    .hero {
-      display: grid;
-      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
-      gap: 2.5rem;
-      align-items: center;
-      padding: 2.5rem 2rem;
-      margin-top: 1.5rem;
-      border-radius: 26px;
-      background: radial-gradient(circle at top left, rgba(79, 209, 197, 0.18), transparent 55%),
-                  radial-gradient(circle at bottom right, rgba(66, 153, 225, 0.18), transparent 55%),
-                  linear-gradient(135deg, #050814, #020617);
-      border: 1px solid rgba(79, 209, 197, 0.25);
-      box-shadow: var(--shadow-soft);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background-image: radial-gradient(circle at 1px 1px, rgba(148, 163, 184, 0.35) 0, transparent 0);
-      background-size: 22px 22px;
-      opacity: 0.18;
-      mix-blend-mode: screen;
-      pointer-events: none;
-    }
-
-    .hero-left {
-      position: relative;
-      z-index: 1;
-    }
-
-    .hero-kicker {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.25rem 0.75rem;
-      border-radius: 999px;
-      background: rgba(15, 23, 42, 0.9);
-      border: 1px solid rgba(79, 209, 197, 0.5);
-      color: var(--accent);
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      margin-bottom: 1.1rem;
-    }
-
-    .hero-kicker-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 999px;
-      background: var(--accent);
-      box-shadow: 0 0 12px rgba(79, 209, 197, 0.9);
-    }
-
-    .hero-title {
-      font-size: clamp(2.2rem, 3vw + 1.2rem, 3.1rem);
-      line-height: 1.1;
-      margin-bottom: 1rem;
-    }
-
-    .hero-title span {
-      background: linear-gradient(135deg, #4fd1c5, #63b3ed);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-
-    .hero-subtitle {
-      color: var(--muted);
-      max-width: 34rem;
-      font-size: 0.98rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .hero-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1.25rem;
-      margin-bottom: 1.75rem;
-      font-size: 0.8rem;
-      color: var(--muted);
-    }
-
-    .hero-meta-item {
-      display: flex;
-      align-items: center;
-      gap: 0.45rem;
-    }
-
-    .hero-meta-badge {
-      padding: 0.1rem 0.55rem;
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.6);
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: #e2e8f0;
-    }
-
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.75rem;
-      align-items: center;
-    }
-
-    .hero-note {
-      font-size: 0.78rem;
-      color: var(--muted);
-    }
-
-    .hero-right {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      justify-content: center;
-    }
-
-    .hero-card {
-      width: 100%;
-      max-width: 340px;
-      border-radius: 24px;
-      background: radial-gradient(circle at top, rgba(79, 209, 197, 0.2), transparent 55%),
-                  linear-gradient(145deg, #020617, #020617);
-      border: 1px solid rgba(148, 163, 184, 0.6);
-      padding: 1.4rem 1.3rem 1.3rem;
-      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.9);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero-card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 1rem;
-    }
-
-    .hero-card-title {
-      font-size: 0.85rem;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      color: #e2e8f0;
-    }
-
-    .hero-card-pill {
-      font-size: 0.7rem;
-      padding: 0.2rem 0.6rem;
-      border-radius: 999px;
-      border: 1px solid rgba(79, 209, 197, 0.7);
-      color: var(--accent);
-      background: rgba(15, 23, 42, 0.9);
-    }
-
-    .hero-orbit {
-      position: relative;
-      width: 100%;
-      padding-top: 100%;
-      border-radius: 999px;
-      border: 1px dashed rgba(148, 163, 184, 0.6);
-      margin-bottom: 1.1rem;
-    }
-
-    .hero-orbit-center {
-      position: absolute;
-      inset: 26%;
-      border-radius: 999px;
-      background: radial-gradient(circle, #e6fffa, #4fd1c5 45%, #1a202c 100%);
-      box-shadow: 0 0 40px rgba(79, 209, 197, 0.9);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.8rem;
-      text-align: center;
-      padding: 0.5rem;
-    }
-
-    .hero-orbit-dot {
-      position: absolute;
-      width: 12px;
-      height: 12px;
-      border-radius: 999px;
-      background: #63b3ed;
-      box-shadow: 0 0 18px rgba(99, 179, 237, 0.9);
-    }
-
-    .hero-orbit-dot:nth-child(1) {
-      top: 6%;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-
-    .hero-orbit-dot:nth-child(2) {
-      bottom: 10%;
-      left: 12%;
-    }
-
-    .hero-orbit-dot:nth-child(3) {
-      bottom: 18%;
-      right: 8%;
-      background: #f6ad55;
-      box-shadow: 0 0 18px rgba(246, 173, 85, 0.9);
-    }
-
-    .hero-card-footer {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 0.75rem;
-      font-size: 0.7rem;
-    }
-
-    .hero-card-stat-label {
-      color: var(--muted);
-      margin-bottom: 0.15rem;
-    }
-
-    .hero-card-stat-value {
-      font-weight: 600;
-      color: #e2e8f0;
-    }
-
-    .hero-card-stat-pill {
-      font-size: 0.65rem;
-      padding: 0.15rem 0.45rem;
-      border-radius: 999px;
-      background: rgba(15, 23, 42, 0.9);
-      border: 1px solid rgba(148, 163, 184, 0.7);
-      color: #e2e8f0;
-      text-align: center;
-    }
-
-    section {
-      margin-top: 3rem;
-    }
-
-    .section-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      gap: 1rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .section-title {
-      font-size: 1.4rem;
-    }
-
-    .section-subtitle {
-      font-size: 0.9rem;
-      color: var(--muted);
-      max-width: 32rem;
-    }
-
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      padding: 0.2rem 0.7rem;
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.7);
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: #e2e8f0;
-    }
-
-    .grid-3 {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 1.5rem;
-    }
-
-    .card {
-      border-radius: var(--radius-lg);
-      background: radial-gradient(circle at top, rgba(15, 23, 42, 0.9), #020617);
-      border: 1px solid rgba(45, 55, 72, 0.9);
-      padding: 1.25rem 1.2rem 1.2rem;
-      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.85);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .card::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at top left, rgba(79, 209, 197, 0.12), transparent 55%);
-      opacity: 0.9;
-      pointer-events: none;
-    }
-
-    .card-content {
-      position: relative;
-      z-index: 1;
-    }
-
-    .card-label {
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      color: var(--muted);
-      margin-bottom: 0.4rem;
-    }
-
-    .card-title {
-      font-size: 1rem;
-      margin-bottom: 0.4rem;
-    }
-
-    .card-text {
-      font-size: 0.85rem;
-      color: var(--muted);
-      margin-bottom: 0.7rem;
-    }
-
-    .card-tag-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-      font-size: 0.7rem;
-    }
-
-    .card-tag {
-      padding: 0.15rem 0.55rem;
-      border-radius: 999px;
-      background: rgba(15, 23, 42, 0.9);
-      border: 1px solid rgba(79, 209, 197, 0.4);
-      color: #e2e8f0;
-    }
-
-    .card-meta {
-      font-size: 0.75rem;
-      color: var(--muted);
-      margin-top: 0.4rem;
-    }
-
-    .grid-2 {
-      display: grid;
-      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
-      gap: 1.75rem;
-    }
-
-    .list {
-      list-style: none;
-      font-size: 0.9rem;
-      color: var(--muted);
-      display: grid;
-      gap: 0.6rem;
-      margin-top: 0.5rem;
-    }
-
-    .list li::before {
-      content: "•";
-      color: var(--accent);
-      margin-right: 0.4rem;
-    }
-
-    .timeline {
-      border-left: 1px solid rgba(148, 163, 184, 0.7);
-      padding-left: 1rem;
-      margin-top: 0.5rem;
-      display: grid;
-      gap: 0.7rem;
-      font-size: 0.85rem;
-      color: var(--muted);
-    }
-
-    .timeline-item {
-      position: relative;
-    }
-
-    .timeline-item::before {
-      content: "";
-      position: absolute;
-      left: -1.1rem;
-      top: 0.25rem;
-      width: 8px;
-      height: 8px;
-      border-radius: 999px;
-      background: var(--accent);
-      box-shadow: 0 0 12px rgba(79, 209, 197, 0.9);
-    }
-
-    .timeline-label {
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: #e2e8f0;
-      margin-bottom: 0.1rem;
-    }
-
-    .contact-card {
-      border-radius: var(--radius-lg);
-      background: radial-gradient(circle at top, rgba(79, 209, 197, 0.18), transparent 55%),
-                  linear-gradient(145deg, #020617, #020617);
-      border: 1px solid rgba(79, 209, 197, 0.5);
-      padding: 1.4rem 1.3rem 1.3rem;
-      box-shadow: 0 16px 38px rgba(15, 23, 42, 0.9);
-      font-size: 0.9rem;
-    }
-
-    .contact-row {
-      display: grid;
-      gap: 0.4rem;
-      margin-top: 0.6rem;
-    }
-
-    .contact-label {
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: var(--muted);
-    }
-
-    .contact-value {
-      color: #e2e8f0;
-    }
-
-    .contact-note {
-      font-size: 0.8rem;
-      color: var(--muted);
-      margin-top: 0.7rem;
-    }
-
-    footer {
-      border-top: 1px solid rgba(45, 55, 72, 0.9);
-      padding: 1.5rem 1.5rem 2rem;
-      margin-top: 2rem;
-      background: radial-gradient(circle at top, rgba(15, 23, 42, 0.9), #020617);
-    }
-
-    .footer-inner {
-      max-width: 1120px;
-      margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
-      gap: 1rem;
-      font-size: 0.8rem;
-      color: var(--muted);
-      flex-wrap: wrap;
-    }
-
-    .footer-links {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-
-    .footer-links a {
-      color: var(--muted);
-    }
-
-    .footer-links a:hover {
-      color: var(--accent);
-    }
-
-    @media (max-width: 900px) {
-      .hero {
-        grid-template-columns: minmax(0, 1fr);
-        padding: 1.8rem 1.4rem;
-      }
-
-      .hero-right {
-        order: -1;
-      }
-
-      .grid-3 {
-        grid-template-columns: minmax(0, 1fr);
-      }
-
-      .grid-2 {
-        grid-template-columns: minmax(0, 1fr);
-      }
-
-      .nav {
-        flex-wrap: wrap;
-      }
-
-      .nav-links {
-        display: none;
-      }
-
-      main {
-        padding-inline: 1.1rem;
-      }
-
-      footer {
-        padding-inline: 1.1rem;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C4QEC | Center for Quantum-Enabled Computing</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy-dark: #020617;
+            --quantum-purple: #8b5cf6;
+            --quantum-blue: #3b82f6;
+            --orcid-green: #A6CE39;
+        }
+        body { 
+            background-color: var(--navy-dark); 
+            color: #f1f5f9; 
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        #particles-js {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 0;
+            background: radial-gradient(circle at 50% 50%, #0a0f25 0%, #020617 100%);
+        }
+
+        .content-wrapper { position: relative; z-index: 10; }
+
+        .nav-link {
+            font-size: 1.15rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            transition: all 0.3s ease;
+            color: #94a3b8;
+            cursor: pointer;
+        }
+        .nav-link:hover { 
+            color: white;
+            text-shadow: 0 0 15px rgba(139, 92, 246, 0.6);
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .group-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            backdrop-filter: blur(8px);
+            transition: all 0.4s ease;
+            height: 100%;
+        }
+        .group-card:hover {
+            border-color: var(--quantum-purple);
+            background: rgba(139, 92, 246, 0.08);
+            transform: translateY(-5px);
+        }
+
+        .point-card {
+            border-left: 2px solid var(--quantum-purple);
+            background: rgba(139, 92, 246, 0.03);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+        }
+        .point-card:hover {
+            background: rgba(139, 92, 246, 0.08);
+            transform: translateX(10px);
+        }
+        
+        .processor-bullet {
+            width: 24px; height: 24px; flex-shrink: 0; margin-top: 4px;
+            color: var(--quantum-purple);
+            filter: drop-shadow(0 0 5px var(--quantum-purple));
+        }
+
+        .logo-svg { transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+        .group:hover .logo-svg { transform: rotate(90deg) scale(1.1); }
+
+        .page-section { display: none; }
+        .page-section.active { display: block; animation: fadeIn 0.6s ease-out; }
+
+        .tab-btn {
+            padding: 0.75rem 2rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            color: #94a3b8;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        .tab-btn.active {
+            color: #8b5cf6;
+            border-bottom-color: #8b5cf6;
+        }
+
+        .person-photo {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .social-icon-btn {
+            width: 32px; height: 32px;
+            border-radius: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.02);
+        }
+        .social-icon-btn:hover {
+            background: rgba(139, 92, 246, 0.2);
+            border-color: var(--quantum-purple);
+            transform: scale(1.1);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <div class="nav">
-      <div class="logo">
-        <div class="logo-icon"></div>
-        <div>
-          <div class="logo-text-main">Instytut Technologii Kwantowych</div>
-          <div class="logo-text-sub">Badania • Innowacje • Współpraca</div>
-        </div>
-      </div>
-      <nav class="nav-links">
-        <a href="#o-instytucie">O instytucie</a>
-        <a href="#badania">Obszary badań</a>
-        <a href="#projekty">Projekty</a>
-        <a href="#zespol">Zespół</a>
-        <a href="#kontakt">Kontakt</a>
-      </nav>
-      <div class="nav-cta">
-        <button class="btn btn-outline">Strefa partnera</button>
-        <button class="btn btn-primary">Dołącz do nas</button>
-      </div>
+
+    <div id="particles-js"></div>
+
+    <div class="content-wrapper">
+        <nav class="px-10 py-8 flex justify-between items-center bg-slate-950/90 backdrop-blur-xl border-b border-white/5 sticky top-0 z-50">
+            <div class="flex items-center gap-4 group cursor-pointer" onclick="showSection('home')">
+                <svg class="logo-svg w-12 h-12" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="25" y="25" width="50" height="50" rx="4" stroke="#8b5cf6" stroke-width="3"/>
+                    <rect x="38" y="38" width="24" height="24" rx="2" fill="#8b5cf6" fill-opacity="0.3" stroke="#8b5cf6" stroke-width="2"/>
+                    <path d="M50 15V25M50 75V85M15 50H25M75 50H85M35 15V25M35 75V85M65 15V25M65 75V85M15 35H25M75 35H85M15 65H25M75 65H85" stroke="#8b5cf6" stroke-width="3" stroke-linecap="round"/>
+                    <circle cx="50" cy="50" r="4" fill="white"/>
+                </svg>
+                <div class="text-4xl tracking-tighter uppercase text-white font-thin">C4<span class="text-purple-500 font-black">QEC</span></div>
+            </div>
+
+            <div class="hidden xl:flex space-x-14">
+                <a onclick="showSection('home')" class="nav-link uppercase">ABOUT</a>
+                <a onclick="showSection('groups')" class="nav-link uppercase">GROUPS</a>
+                <a onclick="showSection('people')" class="nav-link uppercase">PEOPLE</a>
+                <a onclick="showSection('results')" class="nav-link uppercase">RESULTS</a>
+                <a class="nav-link uppercase">CAREER</a>
+            </div>
+        </nav>
+
+        <main id="home-section" class="page-section active">
+            <header class="container mx-auto px-10 pt-32 pb-20 text-center md:text-left">
+                <div class="inline-block px-5 py-1.5 mb-8 border border-purple-500/40 rounded-full text-[11px] font-bold tracking-[0.4em] text-purple-400 uppercase">
+                    Leading Quantum Innovation
+                </div>
+                <h1 class="text-6xl md:text-8xl font-light mb-10 leading-[1.05] text-white tracking-tighter uppercase">
+                    Center for <br><span class="text-purple-500 font-extrabold">Quantum-Enabled Computing</span>
+                </h1>
+            </header>
+
+            <section class="container mx-auto px-10 mb-40">
+                <div class="glass-panel p-10 md:p-16 max-w-6xl rounded-xl shadow-2xl">
+                    <p class="text-xl md:text-3xl font-light leading-relaxed text-slate-200 mb-12">
+                        The Center for Quantum-Enabled Computing (C4QEC) aims to pave the way toward 
+                        <span class="text-purple-400 font-semibold italic">verified</span>, 
+                        <span class="text-purple-400 font-semibold italic">energy-efficient</span>, 
+                        <span class="text-purple-400 font-semibold italic">reliable</span>, and 
+                        <span class="text-purple-400 font-semibold italic">scalable</span> computational advantage based on quantum systems
+                    </p>
+                    <p class="text-xl md:text-2xl font-medium text-purple-300/80 mb-10 tracking-wide uppercase border-b border-purple-500/20 pb-4">Scope and objectives:</p>
+                    <div class="grid gap-6">
+                        <div class="point-card p-6 rounded-r-lg">
+                            <svg class="processor-bullet" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="15" x2="23" y2="15"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="15" x2="4" y2="15"></line></svg>
+                            <p class="text-lg md:text-xl text-slate-300 font-light leading-relaxed">Development of efficient and scalable certification methods for quantum devices.</p>
+                        </div>
+                        <div class="point-card p-6 rounded-r-lg">
+                            <svg class="processor-bullet" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="15" x2="23" y2="15"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="15" x2="4" y2="15"></line></svg>
+                            <p class="text-lg md:text-xl text-slate-300 font-light leading-relaxed">Exploitation of quantum light–matter coupling for computational speedups in AI.</p>
+                        </div>
+                        <div class="point-card p-6 rounded-r-lg">
+                            <svg class="processor-bullet" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="15" x2="23" y2="15"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="15" x2="4" y2="15"></line></svg>
+                            <p class="text-lg md:text-xl text-slate-300 font-light leading-relaxed">Investigation of fundamental limits of quantum computing and error correction.</p>
+                        </div>
+                        <div class="point-card p-6 rounded-r-lg">
+                            <svg class="processor-bullet" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="15" x2="23" y2="15"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="15" x2="4" y2="15"></line></svg>
+                            <p class="text-lg md:text-xl text-slate-300 font-light leading-relaxed">Designing hardware-agnostic quantum algorithms for near-term devices.</p>
+                        </div>
+                        <div class="point-card p-6 rounded-r-lg">
+                            <svg class="processor-bullet" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="15" x2="23" y2="15"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="15" x2="4" y2="15"></line></svg>
+                            <p class="text-lg md:text-xl text-slate-300 font-light leading-relaxed">Establishment of a world-class center for quantum research and education.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <main id="groups-section" class="page-section pt-32 px-10">
+            <div class="container mx-auto pb-40">
+                <h2 class="text-5xl md:text-7xl font-light text-white mb-16 tracking-tighter uppercase">
+                    Research <span class="text-purple-500 font-extrabold">Groups</span>
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="group-card p-10 rounded-2xl">
+                        <h3 class="text-2xl font-bold text-white mb-2">Quantum Information and Certification Group</h3>
+                        <p class="text-purple-400 font-semibold mb-6">Group leader: Prof. Remigiusz Augusiak</p>
+                        <p class="text-slate-400 font-light leading-relaxed">Focused on creating robust methods to verify and certify quantum states and operations in large-scale systems.</p>
+                    </div>
+                    <div class="group-card p-10 rounded-2xl">
+                        <h3 class="text-2xl font-bold text-white mb-2">Semiconductor Polariton Group</h3>
+                        <p class="text-purple-400 font-semibold mb-6">Group leader: Prof. Michał Matuszewski</p>
+                        <p class="text-slate-400 font-light leading-relaxed">Developing ultra-fast and energy-efficient computing systems based on light-matter interactions in semiconductors.</p>
+                    </div>
+                    <div class="group-card p-10 rounded-2xl">
+                        <h3 class="text-2xl font-bold text-white mb-2">Quantum Computational Supremacy Group</h3>
+                        <p class="text-purple-400 font-semibold mb-6">Group leader: Prof. Michał Oszmaniec</p>
+                        <p class="text-slate-400 font-light leading-relaxed">Exploring the boundaries of quantum advantage and designing practical algorithms for next-generation hardware.</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <main id="people-section" class="page-section pt-32 px-10">
+            <div class="container mx-auto pb-40">
+                <h2 class="text-5xl md:text-7xl font-light text-white mb-12 tracking-tighter uppercase">
+                    Our <span class="text-purple-500 font-extrabold">People</span>
+                </h2>
+
+                <div class="flex border-b border-white/10 mb-16">
+                    <button onclick="switchPeopleTab('researchers')" id="tab-researchers" class="tab-btn active uppercase">Researchers</button>
+                    <button onclick="switchPeopleTab('staff')" id="tab-staff" class="tab-btn uppercase">Staff</button>
+                </div>
+
+                <div id="content-researchers" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                    
+                    <div class="group-card p-8 rounded-2xl flex flex-col items-center text-center">
+                        <div class="w-36 h-36 rounded-full bg-gradient-to-br from-purple-500 to-blue-500 mb-6 p-1 shadow-[0_0_20px_rgba(139,92,246,0.3)]">
+                            <div class="w-full h-full rounded-full bg-slate-900 overflow-hidden">
+                                <img src="https://scholar.googleusercontent.com/citations?view_op=medium_photo&user=NDvtpWIAAAAJ" alt="Prof. Remigiusz Augusiak" class="person-photo">
+                            </div>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-1">Prof. Remigiusz Augusiak</h3>
+                        <p class="text-purple-400 font-medium mb-4">Group Leader</p>
+                        <p class="text-slate-400 text-sm font-light mb-6">Quantum Information and Certification Group</p>
+                        <div class="flex gap-4">
+                            <a href="https://raugusiak.weebly.com" target="_blank" class="social-icon-btn" title="Website">
+                                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                            </a>
+                            <a href="https://scholar.google.pl/citations?user=NDvtpWIAAAAJ&hl=pl" target="_blank" class="social-icon-btn" title="Google Scholar">
+                                <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L1 7l11 5 9-4.09V17h2V7L12 2zM7 14.19c0 1.55 2.24 2.81 5 2.81s5-1.26 5-2.81V11l-5 2.27L7 11v3.19z"/></svg>
+                            </a>
+                            <a href="https://orcid.org/0000-0003-1154-6132" target="_blank" class="social-icon-btn" title="ORCID">
+                                <svg class="w-5 h-5 text-[#A6CE39]" fill="currentColor" viewBox="0 0 256 256"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm-23.2,143.2H91.1V88.8h13.7ZM97.4,80.1a8.6,8.6,0,1,1,8.6-8.6A8.6,8.6,0,0,1,97.4,80.1Zm70.7,47.9c0,23.5-12.2,35.2-36.6,35.2H110.1V88.8h23.2c23.2,0,34.8,11.3,34.8,33.9Zm-13.8,0c0-15.6-7-23.4-21-23.4H123.9v46.8h10.4C147.3,151.4,154.3,143.6,154.3,128Z"></path></svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="group-card p-8 rounded-2xl flex flex-col items-center text-center">
+                        <div class="w-36 h-36 rounded-full bg-gradient-to-br from-purple-500 to-blue-500 mb-6 p-1 shadow-[0_0_20px_rgba(139,92,246,0.3)]">
+                            <div class="w-full h-full rounded-full bg-slate-900 overflow-hidden">
+                                <img src="https://scholar.googleusercontent.com/citations?view_op=medium_photo&user=2E4P-5gAAAAJ" alt="Prof. Michał Matuszewski" class="person-photo">
+                            </div>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-1">Prof. Michał Matuszewski</h3>
+                        <p class="text-purple-400 font-medium mb-4">Group Leader</p>
+                        <p class="text-slate-400 text-sm font-light mb-6">Semiconductor Polariton Group</p>
+                        <div class="flex gap-4">
+                            <a href="#" class="social-icon-btn" title="Website">
+                                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                            </a>
+                            <a href="https://scholar.google.pl/citations?hl=pl&user=2E4P-5gAAAAJ" target="_blank" class="social-icon-btn" title="Google Scholar">
+                                <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L1 7l11 5 9-4.09V17h2V7L12 2zM7 14.19c0 1.55 2.24 2.81 5 2.81s5-1.26 5-2.81V11l-5 2.27L7 11v3.19z"/></svg>
+                            </a>
+                            <a href="https://orcid.org/0000-0001-8830-3302" target="_blank" class="social-icon-btn" title="ORCID">
+                                <svg class="w-5 h-5 text-[#A6CE39]" fill="currentColor" viewBox="0 0 256 256"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm-23.2,143.2H91.1V88.8h13.7ZM97.4,80.1a8.6,8.6,0,1,1,8.6-8.6A8.6,8.6,0,0,1,97.4,80.1Zm70.7,47.9c0,23.5-12.2,35.2-36.6,35.2H110.1V88.8h23.2c23.2,0,34.8,11.3,34.8,33.9Zm-13.8,0c0-15.6-7-23.4-21-23.4H123.9v46.8h10.4C147.3,151.4,154.3,143.6,154.3,128Z"></path></svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="group-card p-8 rounded-2xl flex flex-col items-center text-center">
+                        <div class="w-36 h-36 rounded-full bg-gradient-to-br from-purple-500 to-blue-500 mb-6 p-1 shadow-[0_0_20px_rgba(139,92,246,0.3)]">
+                            <div class="w-full h-full rounded-full bg-slate-900 overflow-hidden">
+                                <img src="https://scholar.googleusercontent.com/citations?view_op=medium_photo&user=slH8AeIAAAAJ" alt="Prof. Michał Oszmaniec" class="person-photo">
+                            </div>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-1">Prof. Michał Oszmaniec</h3>
+                        <p class="text-purple-400 font-medium mb-4">Group Leader</p>
+                        <p class="text-slate-400 text-sm font-light mb-6">Quantum Computational Supremacy Group</p>
+                        <div class="flex gap-4">
+                            <a href="https://quantin.pl/" target="_blank" class="social-icon-btn" title="Website">
+                                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                            </a>
+                            <a href="https://scholar.google.pl/citations?hl=pl&user=slH8AeIAAAAJ" target="_blank" class="social-icon-btn" title="Google Scholar">
+                                <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L1 7l11 5 9-4.09V17h2V7L12 2zM7 14.19c0 1.55 2.24 2.81 5 2.81s5-1.26 5-2.81V11l-5 2.27L7 11v3.19z"/></svg>
+                            </a>
+                            <a href="https://orcid.org/0000-0002-4946-6835" target="_blank" class="social-icon-btn" title="ORCID">
+                                <svg class="w-5 h-5 text-[#A6CE39]" fill="currentColor" viewBox="0 0 256 256"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm-23.2,143.2H91.1V88.8h13.7ZM97.4,80.1a8.6,8.6,0,1,1,8.6-8.6A8.6,8.6,0,0,1,97.4,80.1Zm70.7,47.9c0,23.5-12.2,35.2-36.6,35.2H110.1V88.8h23.2c23.2,0,34.8,11.3,34.8,33.9Zm-13.8,0c0-15.6-7-23.4-21-23.4H123.9v46.8h10.4C147.3,151.4,154.3,143.6,154.3,128Z"></path></svg>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div id="content-staff" class="hidden">
+                    <div class="glass-panel p-12 rounded-2xl text-center border-dashed border-2 border-purple-500/20">
+                        <p class="text-xl text-slate-400 italic">Administrative staff profiles will be updated shortly.</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <main id="results-section" class="page-section pt-32 px-10">
+            <div class="container mx-auto flex flex-col items-center justify-center min-h-[60vh] pb-40 text-center">
+                <h2 class="text-5xl md:text-7xl font-light text-white mb-8 tracking-tighter uppercase">Results</h2>
+                <p class="text-2xl md:text-4xl text-purple-400 font-light tracking-wide italic">Results will appear soon</p>
+                <div class="mt-16 flex justify-center gap-4">
+                    <div class="w-2 h-2 rounded-full bg-purple-500 animate-ping"></div>
+                    <div class="w-2 h-2 rounded-full bg-purple-500 animate-ping" style="animation-delay: 0.2s"></div>
+                </div>
+            </div>
+        </main>
     </div>
-  </header>
 
-  <main>
-    <section class="hero" id="start">
-      <div class="hero-left">
-        <div class="hero-kicker">
-          <span class="hero-kicker-dot"></span>
-          <span>Przyszłość obliczeń zaczyna się tutaj</span>
-        </div>
-        <h1 class="hero-title">
-          Tworzymy <span>technologie kwantowe</span>, które zmieniają świat.
-        </h1>
-        <p class="hero-subtitle">
-          Instytut Technologii Kwantowych łączy naukę podstawową z zastosowaniami przemysłowymi.
-          Projektujemy algorytmy, architektury i systemy, które wykorzystują zjawiska kwantowe
-          do rozwiązywania problemów niemożliwych dla klasycznych komputerów.
-        </p>
-        <div class="hero-meta">
-          <div class="hero-meta-item">
-            <span class="hero-meta-badge">Centrum badawcze</span>
-          </div>
-          <div class="hero-meta-item">
-            <span>15+ laboratoriów specjalistycznych</span>
-          </div>
-          <div class="hero-meta-item">
-            <span>Współpraca z przemysłem i uczelniami</span>
-          </div>
-        </div>
-        <div class="hero-actions">
-          <button class="btn btn-primary">
-            Poznaj nasze projekty
-          </button>
-          <button class="btn">
-            Pobierz broszurę instytutu
-          </button>
-          <div class="hero-note">
-            Otwarte nabory doktoranckie i post‑doc 2026
-          </div>
-        </div>
-      </div>
-      <div class="hero-right">
-        <div class="hero-card">
-          <div class="hero-card-header">
-            <div class="hero-card-title">Q‑Systems Lab</div>
-            <div class="hero-card-pill">Programy 2026</div>
-          </div>
-          <div class="hero-orbit">
-            <div class="hero-orbit-center">
-              Qubit • Algorytmy • Bezpieczeństwo
-            </div>
-            <div class="hero-orbit-dot"></div>
-            <div class="hero-orbit-dot"></div>
-            <div class="hero-orbit-dot"></div>
-          </div>
-          <div class="hero-card-footer">
-            <div>
-              <div class="hero-card-stat-label">Aktywne projekty</div>
-              <div class="hero-card-stat-value">27</div>
-            </div>
-            <div>
-              <div class="hero-card-stat-label">Partnerzy</div>
-              <div class="hero-card-stat-value">12 krajów</div>
-            </div>
-            <div>
-              <div class="hero-card-stat-label">Dostęp</div>
-              <div class="hero-card-stat-pill">Chmura kwantowa 24/7</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <script>
+        function showSection(sectionId) {
+            document.querySelectorAll('.page-section').forEach(section => section.classList.remove('active'));
+            const target = document.getElementById(sectionId + '-section');
+            if (target) target.classList.add('active');
+            window.scrollTo(0, 0);
+        }
 
-    <section id="o-instytucie">
-      <div class="section-header">
-        <div>
-          <div class="pill">O instytucie</div>
-          <h2 class="section-title">Misja, wizja i wartości</h2>
-        </div>
-        <p class="section-subtitle">
-          Naszym celem jest przyspieszenie przejścia od badań podstawowych do realnych wdrożeń
-          technologii kwantowych w przemyśle, medycynie, energetyce i bezpieczeństwie cyfrowym.
-        </p>
-      </div>
+        function switchPeopleTab(tabId) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('tab-' + tabId).classList.add('active');
+            document.getElementById('content-researchers').classList.add('hidden');
+            document.getElementById('content-staff').classList.add('hidden');
+            
+            const activeContent = document.getElementById('content-' + tabId);
+            activeContent.classList.remove('hidden');
+            if(tabId === 'researchers') activeContent.classList.add('grid');
+            else activeContent.classList.add('block');
+        }
 
-      <div class="grid-3">
-        <article class="card">
-          <div class="card-content">
-            <div class="card-label">Misja</div>
-            <h3 class="card-title">Od teorii do prototypu</h3>
-            <p class="card-text">
-              Budujemy most między fizyką kwantową a inżynierią systemów. Tworzymy algorytmy,
-              architektury i narzędzia, które pozwalają organizacjom testować i wdrażać
-              rozwiązania kwantowe w kontrolowany, mierzalny sposób.
-            </p>
-            <div class="card-tag-row">
-              <span class="card-tag">Transfer technologii</span>
-              <span class="card-tag">Prototypowanie</span>
-            </div>
-          </div>
-        </article>
-
-        <article class="card">
-          <div class="card-content">
-            <div class="card-label">Wizja</div>
-            <h3 class="card-title">Europa jako lider kwantowy</h3>
-            <p class="card-text">
-              Współtworzymy europejski ekosystem technologii kwantowych, w którym nauka,
-              biznes i administracja publiczna współpracują nad bezpieczną i odpowiedzialną
-              transformacją cyfrową.
-            </p>
-            <div class="card-tag-row">
-              <span class="card-tag">Infrastruktura</span>
-              <span class="card-tag">Standardy</span>
-            </div>
-          </div>
-        </article>
-
-        <article class="card">
-          <div class="card-content">
-            <div class="card-label">Wartości</div>
-            <h3 class="card-title">Otwartość i odpowiedzialność</h3>
-            <p class="card-text">
-              Stawiamy na otwartą naukę, przejrzystość metod i etyczne wykorzystanie
-              technologii. Inwestujemy w edukację, aby technologie kwantowe były zrozumiałe
-              i dostępne dla szerokiego grona odbiorców.
-            </p>
-            <div class="card-tag-row">
-              <span class="card-tag">Open science</span>
-              <span class="card-tag">Etyka</span>
-            </div>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <section id="badania">
-      <div class="section-header">
-        <div>
-          <div class="pill">Obszary badań</div>
-          <h2 class="section-title">Od algorytmów po sprzęt</h2>
-        </div>
-        <p class="section-subtitle">
-          Prowadzimy badania w pełnym łańcuchu wartości technologii kwantowych: od teorii
-          informacji kwantowej, przez oprogramowanie i kompilatory, aż po architektury
-          sprzętowe i integrację z systemami klasycznymi.
-        </p>
-      </div>
-
-      <div class="grid-3">
-        <article class="card">
-          <div class="card-content">
-            <div class="card-label">Algorytmy</div>
-            <h3 class="card-title">Obliczenia i optymalizacja</h3>
-            <p class="card-text">
-              Projektujemy i analizujemy algorytmy kwantowe dla optymalizacji, symulacji
-              materiałów, finansów oraz uczenia maszynowego.
-            </p>
-            <ul class="list">
-              <li>Algorytmy hybrydowe (VQA, QAOA)</li>
-              <li>Symulacje chemiczne i materiałowe</li>
-              <li>Uczenie maszynowe z wykorzystaniem qubitów</li>
-            </ul>
-          </div>
-        </article>
-
-        <article class="card">
-          <div class="card-content">
-            <div class="card-label">Bezpieczeństwo</div>
-            <h3 class="card-title">Kryptografia post‑kwantowa</h3>
-            <p class="card-text">
-              Analizujemy wpływ komputerów kwantowych na bezpieczeństwo danych oraz
-              projektujemy protokoły odporniejsze na ataki kwantowe.
-            </p>
-            <ul class="list">
-              <li>Analiza ryzyka dla infrastruktury krytycznej</li>
-              <li>Implementacje PQC i migracja systemów</li>
-              <li>Sieci QKD i dystrybucja kluczy</li>
-            </ul>
-          </div>
-        </article>
-
-        <article class="card">
-          <div class="card-content">
-            <div class="card-label">Infrastruktura</div>
-            <h3 class="card-title">Platformy i integracja</h3>
-            <p class="card-text">
-              Tworzymy środowiska testowe, interfejsy API i narzędzia do integracji
-              obliczeń kwantowych z istniejącymi systemami IT.
-            </p>
-            <ul class="list">
-              <li>Dostęp chmurowy do procesorów kwantowych</li>
-              <li>Emulatory i symulatory wysokiej wydajności</li>
-              <li>Standardy interoperacyjności</li>
-            </ul>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <section id="projekty">
-      <div class="section-header">
-        <div>
-          <div class="pill">Projekty i partnerstwa</div>
-          <h2 class="section-title">Programy strategiczne 2024–2030</h2>
-        </div>
-        <p class="section-subtitle">
-          Realizujemy projekty finansowane ze środków krajowych i europejskich, we współpracy
-          z uczelniami, centrami badawczymi oraz partnerami przemysłowymi.
-        </p>
-      </div>
-
-      <div class="grid-2">
-        <div>
-          <article class="card">
-            <div class="card-content">
-              <div class="card-label">Programy flagowe</div>
-              <h3 class="card-title">Q‑Industry, Q‑Health, Q‑Secure</h3>
-              <p class="card-text">
-                Trzy główne linie programowe skupione na zastosowaniach technologii kwantowych
-                w przemyśle, medycynie i bezpieczeństwie cyfrowym.
-              </p>
-              <div class="timeline">
-                <div class="timeline-item">
-                  <div class="timeline-label">Q‑Industry</div>
-                  <div>Optymalizacja procesów logistycznych i energetycznych z użyciem algorytmów kwantowych.</div>
-                </div>
-                <div class="timeline-item">
-                  <div class="timeline-label">Q‑Health</div>
-                  <div>Symulacje molekularne dla projektowania leków i terapii spersonalizowanych.</div>
-                </div>
-                <div class="timeline-item">
-                  <div class="timeline-label">Q‑Secure</div>
-                  <div>Migracja do kryptografii post‑kwantowej i testy odporności systemów.</div>
-                </div>
-              </div>
-            </div>
-          </article>
-        </div>
-
-        <div>
-          <article class="card">
-            <div class="card-content">
-              <div class="card-label">Dla partnerów</div>
-              <h3 class="card-title">Jak współpracujemy</h3>
-              <p class="card-text">
-                Oferujemy różne modele współpracy: od krótkich projektów pilotażowych,
-                przez wspólne granty badawcze, po długoterminowe programy strategiczne.
-              </p>
-              <ul class="list">
-                <li>Warsztaty i szkolenia dla zespołów technicznych</li>
-                <li>Ocena gotowości organizacji na technologie kwantowe</li>
-                <li>Projektowanie i realizacja proof‑of‑concept</li>
-              </ul>
-              <p class="card-meta">
-                Skontaktuj się z nami, aby omówić potrzeby Twojej organizacji.
-              </p>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section id="zespol">
-      <div class="section-header">
-        <div>
-          <div class="pill">Zespół</div>
-          <h2 class="section-title">Naukowcy, inżynierowie, edukatorzy</h2>
-        </div>
-        <p class="section-subtitle">
-          Łączymy doświadczenie akademickie z praktyką inżynierską. W naszym zespole są
-          fizycy, informatycy, matematycy, specjaliści ds. bezpieczeństwa oraz popularyzatorzy nauki.
-        </p>
-      </div>
-
-      <div class="grid-3">
-        <article class="card">
-          <div class="card-content">
-            <div class="card-label">Dyrekcja naukowa</div>
-            <h3 class="card-title">Prof. dr hab. Anna Kowalska</h3>
-            <p class="card-text">
-              Specjalistka w dziedzinie informacji kwantowej i algorytmów hybrydowych.
-              Odpowiada za strategię badawczą instytutu.
-            </p>
-            <div class="card-meta">Kontakt: anna.kowalska@itk.example</div>
-          </div>
-        </article>
-
-        <article class="card">
-          <div class="card-content">
-            <div class="card-label">Infrastruktura</div>
-            <h3 class="card-title">Dr inż. Piotr Nowak</h3>
-            <p class="card-text">
-              Kieruje zespołem odpowiedzialnym za integrację platform kwantowych z
-              infrastrukturą chmurową i centrami danych.
-            </p>
-            <div class="card-meta">Kontakt: piotr.nowak@itk.example</div>
-          </div>
-        </article>
-
-        <article class="card">
-          <div class="card-content">
-            <div class="card-label">Edukacja</div>
-            <h3 class="card-title">Mgr Julia Wiśniewska</h3>
-            <p class="card-text">
-              Prowadzi programy szkoleniowe dla studentów, firm i administracji publicznej,
-              wprowadzając w świat technologii kwantowych.
-            </p>
-            <div class="card-meta">Kontakt: julia.wisniewska@itk.example</div>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <section id="kontakt">
-      <div class="section-header">
-        <div>
-          <div class="pill">Kontakt</div>
-          <h2 class="section-title">Porozmawiajmy o współpracy</h2>
-        </div>
-        <p class="section-subtitle">
-          Szukasz partnera do projektu badawczego, chcesz zorganizować szkolenie lub
-          ocenić wpływ technologii kwantowych na Twoją organizację? Napisz do nas.
-        </p>
-      </div>
-
-      <div class="grid-2">
-        <div>
-          <article class="contact-card">
-            <h3>Biuro współpracy i projektów</h3>
-            <div class="contact-row">
-              <div>
-                <div class="contact-label">E‑mail</div>
-                <div class="contact-value">kontakt@itk.example</div>
-              </div>
-              <div>
-                <div class="contact-label">Telefon</div>
-                <div class="contact-value">+48 000 000 000</div>
-              </div>
-              <div>
-                <div class="contact-label">Adres</div>
-                <div class="contact-value">
-                  Instytut Technologii Kwantowych<br />
-                  ul. Przykładowa 1<br />
-                  00‑000 Warszawa
-                </div>
-              </div>
-            </div>
-            <p class="contact-note">
-              Odpowiadamy zazwyczaj w ciągu 2 dni roboczych. W sprawie mediów i wydarzeń
-              prosimy o dopisek „MEDIA” w tytule wiadomości.
-            </p>
-          </article>
-        </div>
-
-        <div>
-          <article class="card">
-            <div class="card-content">
-              <div class="card-label">Formularz</div>
-              <h3 class="card-title">Zgłoszenie współpracy (szkic)</h3>
-              <p class="card-text">
-                Możesz zaadaptować poniższy szkic jako formularz kontaktowy (np. w systemie CMS):
-              </p>
-              <ul class="list">
-                <li>Nazwa organizacji</li>
-                <li>Obszar zainteresowania (Q‑Industry / Q‑Health / Q‑Secure / inne)</li>
-                <li>Krótki opis wyzwania lub pomysłu</li>
-                <li>Preferowana forma współpracy i termin</li>
-              </ul>
-              <p class="card-meta">
-                Po otrzymaniu zgłoszenia zaproponujemy spotkanie online z odpowiednim zespołem.
-              </p>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <div class="footer-inner">
-      <div>© 2026 Instytut Technologii Kwantowych</div>
-      <div class="footer-links">
-        <a href="#start">Strona główna</a>
-        <a href="#badania">Badania</a>
-        <a href="#projekty">Projekty</a>
-        <a href="#kontakt">Kontakt</a>
-      </div>
-    </div>
-  </footer>
+        particlesJS("particles-js", {
+            "particles": {
+                "number": { "value": 110, "density": { "enable": true, "value_area": 800 } },
+                "color": { "value": "#8b5cf6" },
+                "shape": { "type": "circle" },
+                "opacity": { "value": 0.4, "random": true },
+                "size": { "value": 3, "random": true },
+                "line_linked": { "enable": true, "distance": 150, "color": "#3b82f6", "opacity": 0.3, "width": 1 },
+                "move": { "enable": true, "speed": 1.2, "direction": "none", "out_mode": "out" }
+            },
+            "interactivity": {
+                "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" } },
+                "modes": { "grab": { "distance": 220, "line_linked": { "opacity": 0.5 } } }
+            },
+            "retina_detect": true
+        });
+    </script>
 </body>
 </html>
